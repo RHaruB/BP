@@ -87,6 +87,9 @@ namespace BP_API.Service
 
         public async Task<CuentaDTO> CreateCuentaAsync(CuentaDTO request)
         {
+            string nroCuenta = await _parametro.GetNumeroCuentasByIdAsync();
+            var estado = _parametro.GetParametros(3).FirstOrDefault(p => p.Valor == "Activo")?.IdParametro;
+
             using (var transaction = await _bPContext.Database.BeginTransactionAsync())
             {
                 try
@@ -94,10 +97,10 @@ namespace BP_API.Service
                     var cuenta = new Cuentum
                     {
                         IdCliente = request.IdCliente,
-                        NumeroCuenta = request.NumeroCuenta,
+                        NumeroCuenta = nroCuenta,
                         Tipo = request.Tipo,
                         SaldoInicial = request.SaldoInicial,
-                        Estado = request.Estado
+                        Estado = (int)estado
                     };
 
                     _bPContext.Cuenta.Add(cuenta);

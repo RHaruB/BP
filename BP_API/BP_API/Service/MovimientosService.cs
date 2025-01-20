@@ -25,7 +25,7 @@ namespace BP_API.Service
                                      select new MovimientoDTO
                                      {
                                          IdMovimiento = m.IdMovimiento,
-                                         IdCuenta = m.IdCuenta,
+                                         NumeroCuenta = c.NumeroCuenta,
                                          Fecha = m.Fecha,
                                          TipoMovimiento = m.TipoMovimiento,                                      
                                          Valor = m.Valor,
@@ -36,7 +36,7 @@ namespace BP_API.Service
             return movimientos.Select(m => new MovimientoDTO
             {
                 IdMovimiento = m.IdMovimiento,
-                IdCuenta = m.IdCuenta,
+                NumeroCuenta = m.NumeroCuenta,
                 Fecha = m.Fecha,
                 TipoMovimiento = m.TipoMovimiento,
                 TipoMovimientoDescripcion = _parametro.GetDescripcionParametrosById(m.TipoMovimiento),

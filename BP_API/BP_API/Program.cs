@@ -1,7 +1,11 @@
 using BP_API.Contracts;
 using BP_API.Models;
 using BP_API.Service;
+using crypto;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
+using QuestPDF.Fluent;
+
 
 namespace BP_API
 {
@@ -9,6 +13,8 @@ namespace BP_API
     {
         public static void Main(string[] args)
         {
+            QuestPDF.Settings.License = LicenseType.Community;
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -16,6 +22,7 @@ namespace BP_API
             builder.Services.AddScoped<ICuenta, CuentaService>();
             builder.Services.AddScoped<IParametro, ParametroService>();
             builder.Services.AddScoped<IMovimientos, MovimientosService>();
+            builder.Services.AddScoped<IReporte, ReporteService>();
 
 
             builder.Services.AddControllers();
@@ -44,7 +51,8 @@ namespace BP_API
                                       builder.AllowAnyOrigin();
 
                                   });
-            }); 
+            });
+            QuestPDF.Settings.License = LicenseType.Community;
 
             var app = builder.Build();
 

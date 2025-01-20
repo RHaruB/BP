@@ -4,6 +4,7 @@
     {
         public int IdMovimiento { get; set; }
         public int IdCuenta { get; set; }
+        public string NumeroCuenta { get; set; }
         public DateTime Fecha { get; set; }
         public int TipoMovimiento { get; set; }
         public string TipoMovimientoDescripcion { get; set; } = string.Empty;
