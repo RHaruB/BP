@@ -41,5 +41,27 @@ namespace BP_API.Service
 
             return parametro;
         }
+        public async Task<string> GetNumeroCuentasByIdAsync()
+        {
+            var parametro = _bPContext.Parametros
+           .Where(p => p.Tipo == 6 && p.Clave == "cta")
+           .FirstOrDefault();
+            string numeroCTASTR = string.Empty;
+
+            long numerocta = 0;
+
+            if (parametro != null && parametro.Valor != null)
+            {
+                numerocta = long.Parse(parametro.Valor);
+                numerocta++;
+
+                parametro.Valor = numerocta.ToString();
+                numeroCTASTR = numerocta.ToString();
+                await _bPContext.SaveChangesAsync();
+
+            }
+
+            return numeroCTASTR;
+        }
     }
 }

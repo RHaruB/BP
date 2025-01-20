@@ -27,5 +27,11 @@ namespace BP_API.Controllers
             var result = _parametro.GetDescripcionParametrosById(id);
             return new JsonResult(result);
         }
+        [HttpGet("GetNumeroCuentasByIdAsync")]
+        public async Task<IActionResult> GetNumeroCuentasByIdAsync()
+        {
+            var result = await _parametro.GetNumeroCuentasByIdAsync();
+            return new JsonResult(result);
+        }
     }
 }

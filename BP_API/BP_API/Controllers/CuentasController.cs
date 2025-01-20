@@ -16,14 +16,14 @@ namespace BP_API.Controllers
             _cuentasService = cuentasService;
         }
 
-        [HttpGet("GetAllCuentas")]
+        [HttpGet("")]
         public async Task<IActionResult> GetAllCuentas()
         {
             var cuentas = await _cuentasService.GetAllCuentasAsync();
             return Ok(cuentas);
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var cuenta = await _cuentasService.GetByIdAsync(id);
@@ -32,7 +32,7 @@ namespace BP_API.Controllers
             return Ok(cuenta);
         }
 
-        [HttpPost("CreateCuenta")]
+        [HttpPost("")]
         public async Task<IActionResult> Create([FromBody] CuentaDTO request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

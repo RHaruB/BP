@@ -18,9 +18,12 @@ namespace BP_API.Service
 
         public async Task<List<CuentaDTO>> GetAllCuentasAsync()
         {
+            var estadoEliminado = _parametro.GetParametros(3).FirstOrDefault(p => p.Valor == "Inactivo")?.IdParametro;
+
             var cuentas = await (from c in _bPContext.Cuenta
                                  join cliente in _bPContext.Clientes on c.IdCliente equals cliente.IdCliente
                                  join persona in _bPContext.Personas on cliente.PersonaId equals persona.Id
+                                 where c.Estado != estadoEliminado
                                  select new
                                  {
                                      c.IdCuenta,

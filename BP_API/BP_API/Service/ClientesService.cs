@@ -18,10 +18,10 @@ namespace BP_API.Service
         }
         public async Task<List<ClienteDTO>> GetAllClientes()
         {
-          
 
-            var clientes = await _bPContext.Clientes
-            .Include(c => c.Persona) 
+            var estadoEliminado = _parametro.GetParametros(3).FirstOrDefault(p => p.Valor == "Inactivo")?.IdParametro;
+            var clientes = await _bPContext.Clientes.Where(s => s.Estado != estadoEliminado)
+            .Include(c => c.Persona)
             .ToListAsync();
 
             return clientes.Select(c => new ClienteDTO
@@ -33,8 +33,8 @@ namespace BP_API.Service
                 GeneroDescripcion = _parametro.GetDescripcionParametrosById(c.Persona.Genero),
                 FechaNacimiento = c.Persona.FechaNacimiento,
                 Identificacion = c.Persona.Identificacion,
-                TipoIdentificacion =  c.Persona.TipoIdentificacion,
-                TipoIdentificacionDescripcion = _parametro.GetDescripcionParametrosById( c.Persona.TipoIdentificacion),
+                TipoIdentificacion = c.Persona.TipoIdentificacion,
+                TipoIdentificacionDescripcion = _parametro.GetDescripcionParametrosById(c.Persona.TipoIdentificacion),
                 Direccion = c.Persona.Direccion,
                 Telefono = c.Persona.Telefono,
                 Contrasena = c.Contrasena,
@@ -47,7 +47,7 @@ namespace BP_API.Service
         public async Task<ClienteDTO?> GetByIdAsync(int id)
         {
             var cliente = await _bPContext.Clientes
-                .Include(c => c.Persona) 
+                .Include(c => c.Persona)
                 .FirstOrDefaultAsync(c => c.IdCliente == id);
 
             if (cliente == null) return null;
@@ -58,7 +58,7 @@ namespace BP_API.Service
                 Id = cliente.PersonaId,
                 Nombre = cliente.Persona.Nombre,
                 Genero = cliente.Persona.Genero,
-                GeneroDescripcion =  _parametro.GetDescripcionParametrosById(cliente.Persona.Genero),
+                GeneroDescripcion = _parametro.GetDescripcionParametrosById(cliente.Persona.Genero),
                 FechaNacimiento = cliente.Persona.FechaNacimiento,
                 Identificacion = cliente.Persona.Identificacion,
                 TipoIdentificacion = cliente.Persona.TipoIdentificacion,
@@ -78,6 +78,8 @@ namespace BP_API.Service
             {
                 try
                 {
+                    var estado = _parametro.GetParametros(3).FirstOrDefault(p => p.Valor == "Activo")?.IdParametro;
+
                     var persona = new Persona
                     {
                         Nombre = request.Nombre,
@@ -88,6 +90,7 @@ namespace BP_API.Service
                         Direccion = request.Direccion,
                         Telefono = request.Telefono,
                         FechaIngreso = DateTime.Now,
+
                         FechaActualizacion = DateTime.Now
                     };
                     _bPContext.Personas.Add(persona);
@@ -95,9 +98,9 @@ namespace BP_API.Service
 
                     var cliente = new Cliente
                     {
-                        PersonaId = persona.Id, 
+                        PersonaId = persona.Id,
                         Contrasena = request.Contrasena,
-                        Estado = request.Estado,
+                        Estado = (int)estado,
                         FechaIngreso = DateTime.Now,
                         FechaActualizacion = DateTime.Now
                     };
@@ -126,25 +129,55 @@ namespace BP_API.Service
 
         public async Task<bool> UpdateAsync(int id, ClienteDTO request)
         {
-            var cliente = await _bPContext.Clientes.FirstOrDefaultAsync(c => c.IdCliente == id);
-            if (cliente == null) return false;
+            using (var transaction = await _bPContext.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    // Buscar el cliente y la persona asociada
+                    var cliente = await _bPContext.Clientes
+                        .Include(c => c.Persona) // Incluir datos de Persona relacionados
+                        .FirstOrDefaultAsync(c => c.IdCliente == id);
 
-            cliente.PersonaId = request.Id;
-            cliente.Contrasena = request.Contrasena;
-            cliente.Estado = request.Estado;
-            cliente.FechaActualizacion = DateTime.Now;
+                    if (cliente == null) return false; // Cliente no encontrado
 
-            await _bPContext.SaveChangesAsync();
-            return true;
+                    // Actualizar los datos del cliente
+                    cliente.Contrasena = request.Contrasena;
+                    cliente.FechaActualizacion = DateTime.Now;
+
+                    // Verificar si la entidad Persona existe y actualizar sus datos
+                    if (cliente.Persona != null)
+                    {
+                        cliente.Persona.Nombre = request.Nombre;
+                        cliente.Persona.Genero = request.Genero;
+                        cliente.Persona.FechaNacimiento = request.FechaNacimiento;
+                        cliente.Persona.Identificacion = request.Identificacion;
+                        cliente.Persona.TipoIdentificacion = request.TipoIdentificacion;
+                        cliente.Persona.Direccion = request.Direccion;
+                        cliente.Persona.Telefono = request.Telefono;
+                        cliente.Persona.FechaActualizacion = DateTime.Now;
+                    }
+
+                    // Guardar los cambios
+                    await _bPContext.SaveChangesAsync();
+                    await transaction.CommitAsync(); // Confirmar la transacción
+
+                    return true;
+                }
+                catch (Exception)
+                {
+                    await transaction.RollbackAsync(); // Revertir la transacción en caso de error
+                    throw;
+                }
+            }
         }
         public async Task<bool> DeleteAsync(int id)
         {
             var estados = _parametro.GetParametros(3);
-            var estadoEliminado = estados.Where(s => s.Valor == "Inactivo").FirstOrDefault().IdParametro; 
+            var estadoEliminado = estados.Where(s => s.Valor == "Inactivo").FirstOrDefault().IdParametro;
 
             var cliente = await _bPContext.Clientes.FirstOrDefaultAsync(c => c.IdCliente == id);
             if (cliente == null) return false;
-            
+
             cliente.Estado = estadoEliminado;
             cliente.FechaActualizacion = DateTime.Now;
 

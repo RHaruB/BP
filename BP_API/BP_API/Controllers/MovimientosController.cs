@@ -16,14 +16,14 @@ namespace BP_API.Controllers
             _movimientosService = movimientosService;
         }
 
-        [HttpGet("GetAllMovimientos")]
+        [HttpGet("")]
         public async Task<IActionResult> GetAllMovimientos()
         {
             var movimientos = await _movimientosService.GetAllMovimientosAsync();
             return Ok(movimientos);
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var movimiento = await _movimientosService.GetByIdAsync(id);
@@ -32,7 +32,7 @@ namespace BP_API.Controllers
             return Ok(movimiento);
         }
 
-        [HttpPost("CreateMovimiento")]
+        [HttpPost("")]
         public async Task<IActionResult> Create([FromBody] MovimientoDTO request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

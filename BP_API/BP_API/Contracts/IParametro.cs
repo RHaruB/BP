@@ -6,5 +6,6 @@ namespace BP_API.Contracts
     {
         List<ParametroDTO> GetParametros(int id);
         string GetDescripcionParametrosById(int id);
+        Task<string> GetNumeroCuentasByIdAsync();
     }
 }

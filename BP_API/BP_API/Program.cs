@@ -15,6 +15,7 @@ namespace BP_API
             builder.Services.AddScoped<IClientes, ClientesService>();
             builder.Services.AddScoped<ICuenta, CuentaService>();
             builder.Services.AddScoped<IParametro, ParametroService>();
+            builder.Services.AddScoped<IMovimientos, MovimientosService>();
 
 
             builder.Services.AddControllers();
@@ -57,6 +58,7 @@ namespace BP_API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseCors("API");
 
 
             app.MapControllers();

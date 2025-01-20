@@ -25,7 +25,6 @@ namespace BP_API.Controllers
         }
 
         [HttpGet("{id}")]
-        //[HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var cliente = await _clientesService.GetByIdAsync(id);
@@ -35,7 +34,6 @@ namespace BP_API.Controllers
         }
 
         [HttpPost("")]
-        //[HttpPost("CreateCliente")]
         public async Task<IActionResult> Create([FromBody] ClienteDTO request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

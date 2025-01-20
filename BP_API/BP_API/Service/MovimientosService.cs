@@ -27,15 +27,25 @@ namespace BP_API.Service
                                          IdMovimiento = m.IdMovimiento,
                                          IdCuenta = m.IdCuenta,
                                          Fecha = m.Fecha,
-                                         TipoMovimiento = m.TipoMovimiento,
-                                         TipoMovimientoDescripcion = _parametro.GetDescripcionParametrosById(m.TipoMovimiento),
+                                         TipoMovimiento = m.TipoMovimiento,                                      
                                          Valor = m.Valor,
                                          Saldo = m.Saldo,
                                          ClienteNombre = p.Nombre
                                      }).ToListAsync();
 
-            return movimientos;
+            return movimientos.Select(m => new MovimientoDTO
+            {
+                IdMovimiento = m.IdMovimiento,
+                IdCuenta = m.IdCuenta,
+                Fecha = m.Fecha,
+                TipoMovimiento = m.TipoMovimiento,
+                TipoMovimientoDescripcion = _parametro.GetDescripcionParametrosById(m.TipoMovimiento),
+                Valor = m.Valor,
+                Saldo = m.Saldo,
+                ClienteNombre = m.ClienteNombre
+            }).ToList();
         }
+
 
         public async Task<MovimientoDTO?> GetByIdAsync(int id)
         {
@@ -64,10 +74,35 @@ namespace BP_API.Service
             var cuenta = await _bPContext.Cuenta.FirstOrDefaultAsync(c => c.IdCuenta == request.IdCuenta);
             if (cuenta == null) throw new Exception("La cuenta no existe.");
 
-            if (request.TipoMovimiento == 5 && cuenta.SaldoInicial < request.Valor)
-                throw new Exception("Saldo insuficiente para realizar el movimiento.");
+            if (request.TipoMovimiento == 15)
+            {
+                
+                if (request.Valor <= 0)
+                {
+                    throw new Exception("El valor del crédito debe ser mayor que cero.");
+                }
+            }
+            if (request.TipoMovimiento == 16)
+            {
+                if (cuenta.SaldoInicial <= 0)
+                {
+                    throw new Exception("No se pueden realizar más débitos, el saldo de la cuenta ha llegado a cero.");
+                }
 
-            var nuevoSaldo = request.TipoMovimiento == 5 ? cuenta.SaldoInicial - request.Valor : cuenta.SaldoInicial + request.Valor;
+                if (cuenta.SaldoInicial < request.Valor)
+                {
+                    throw new Exception("Saldo insuficiente para realizar el débito.");
+                }
+            }
+
+            var nuevoSaldo = request.TipoMovimiento == 15 // Crédito
+                ? cuenta.SaldoInicial + request.Valor
+                : cuenta.SaldoInicial - request.Valor; // Débito
+
+            if (nuevoSaldo < 0 && request.TipoMovimiento == 16)
+            {
+                throw new Exception("No se puede realizar el débito, el saldo resultante sería negativo.");
+            }
 
             var movimiento = new Movimiento
             {
@@ -96,6 +131,7 @@ namespace BP_API.Service
                 Saldo = movimiento.Saldo
             };
         }
+
 
         public async Task<bool> UpdateMovimientoAsync(int id, MovimientoDTO request)
         {
