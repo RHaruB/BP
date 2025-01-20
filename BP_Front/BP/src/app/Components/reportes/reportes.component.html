@@ -1,0 +1,60 @@
+<div class="container form-container">
+    <div class="form-header">
+      <h2>Generar Estado de Cuenta</h2>
+    </div>
+  
+    <form (ngSubmit)="generarReporte()" class="cliente-form">
+      <div class="form-group">
+        <label for="fechaInicio">Fecha de Inicio</label>
+        <input
+          type="date"
+          id="fechaInicio"
+          class="form-input"
+          [(ngModel)]="fechaInicio"
+          name="fechaInicio"
+          required
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="fechaFin">Fecha de Fin</label>
+        <input
+          type="date"
+          id="fechaFin"
+          class="form-input"
+          [(ngModel)]="fechaFin"
+          name="fechaFin"
+          required
+        />
+      </div>
+  
+      <!-- Selección de la cuenta -->
+      <div class="form-group">
+        <label for="idCuenta">Cuenta</label>
+        <select
+          id="idCuenta"
+          formControlName="idCuenta"
+          class="form-input"
+          [(ngModel)]="clienteId"
+        >
+          <option value="" disabled>Seleccionar cuenta</option>
+          <option *ngFor="let cliente of clientes" [value]="cliente.idCliente">
+            {{ cliente.nombre }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" class="submit-button">Generar Reporte</button>
+      </div>
+    </form>
+  
+    <!-- Mensaje de error -->
+    <div *ngIf="error" class="alert alert-danger mt-3">
+      {{ error }}
+    </div>
+  
+    <!-- Mensaje de éxito o descarga -->
+    
+  </div>
+  

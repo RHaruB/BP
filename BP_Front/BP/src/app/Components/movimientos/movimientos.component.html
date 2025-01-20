@@ -1,0 +1,42 @@
+<div class="movimientos-container">
+    <h1>Movimientos</h1>
+    <div class="actions">
+      <input 
+        type="text" 
+        placeholder="Buscar" 
+        class="search-input" 
+      >
+      <button class="new-button" (click)="crearMovimiento()">Nuevo</button>
+    </div>
+  </div>
+  <div class="table-container">
+    <table class="movimientos-table">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Número de Cuenta</th>
+          <th>Fecha</th>
+          <th>Tipo de Movimiento</th>
+          <th>Valor</th>
+          <th>Saldo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movimiento of movimientos">
+          <td>{{ movimiento.clienteNombre }}</td>
+          <td>{{ movimiento.numeroCuenta }}</td>
+          <td>{{ movimiento.fecha | date: 'short' }}</td>
+          <td>{{ movimiento.tipoMovimientoDescripcion }}</td>
+          <td>{{ movimiento.valor | currency }}</td>
+          <td>{{ movimiento.saldo | currency }}</td>
+          <td>
+            <button class="new-button" (click)="editarMovimiento(movimiento)">Editar</button>
+            <button class="new-button" (click)="eliminarMovimiento(movimiento.idMovimiento)">Eliminar</button>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

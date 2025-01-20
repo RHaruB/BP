@@ -1,42 +1,78 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+# ==============================
+# Node.js / Angular
+# ==============================
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# Dependencias
+node_modules/
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# Archivos generados por Angular
+/dist/
+/out-tsc/
+/.angular/
 
-# IDEs and editors
+# Archivos de cache y temporales de npm/yarn
+/.npm/
+/yarn.lock
+/package-lock.json
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+
+# ==============================
+# Visual Studio / C#
+# ==============================
+
+# Archivos de configuración de Visual Studio
+.vs/
+.vscode/
 .idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
+# Archivos del entorno de desarrollo en Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
+# Archivos binarios y de compilación en C#
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
 
-# System files
+# Archivos de configuración de dependencias y lockfiles para .NET
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Archivos temporales o generados por Visual Studio
+Generated Files/
+
+# ==============================
+# Archivos Generales del Sistema
+# ==============================
+
+# Archivos de sistema
 .DS_Store
 Thumbs.db
+
+# Archivos de log
+*.log
+*.tmp
+
+# ==============================
+# Otros
+# ==============================
+
+# Otros archivos generados por editores de texto o IDEs
+*.swp
+*.swo

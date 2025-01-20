@@ -1,0 +1,39 @@
+<div class="clientes-container">
+    <h1>Clientes</h1>
+    <div class="actions">
+      <input 
+        type="text" 
+
+        placeholder="Buscar"
+        class="search-input"
+      >
+      <button class="new-button" (click)="CrearCliente()">Nuevo</button>
+    </div>
+  </div>
+  <div class="table-container">
+    <table class="clients-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Género</th>
+          <th>Edad</th>
+          <th>Identificación</th>
+          <th>Dirección</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients">
+          <td>{{client.nombre}}</td>
+          <td>{{client.generoDescripcion}}</td>
+          <td>{{client.edad}}</td>
+          <td>{{client.identificacion}}</td>
+          <td>{{client.direccion}}</td>
+          <td>{{client.telefono}}</td>
+          <td><button  class="new-button" (click)="editarCliente(client.idCliente)">Editar</button><button class="new-button" (click)="eliminarCiente(client.idCliente)">Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-notificacion></app-notificacion>

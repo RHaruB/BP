@@ -1,0 +1,40 @@
+<div class="cuentas-container">
+    <h1>Cuentas</h1>
+    <div class="actions">
+      <input 
+        type="text" 
+        placeholder="Buscar"
+        class="search-input"
+        [(ngModel)]="searchText"
+      >
+      <button class="new-button" (click)="crearCuenta()">Nueva Cuenta</button>
+    </div>
+  </div>
+  
+  <div class="table-container">
+    <table class="accounts-table">
+      <thead>
+        <tr>
+          <th>Número de Cuenta</th>
+          <th>Tipo</th>
+          <th>Saldo Inicial</th>
+          <th>Estado</th>
+          <th>Nombre del Cliente</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cuenta of cuentas ">
+          <td>{{ cuenta.numeroCuenta }}</td>
+          <td>{{ cuenta.tipoDescripcion }}</td>
+          <td>{{ cuenta.saldoInicial | currency }}</td>
+          <td>{{ cuenta.estadoDescripcion }}</td>
+          <td>{{ cuenta.clienteNombre }}</td>
+          <td>
+            <button class="new-button" (click)="eliminarCuenta(cuenta.idCuenta)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

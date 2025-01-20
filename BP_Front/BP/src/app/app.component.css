@@ -1,0 +1,25 @@
+.app-container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+  }
+  .content-container {
+    display: flex;
+  }
+  .main-content {
+    flex: 1;
+    background: white;
+    margin: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  .new-button {
+    padding: 0.5rem 1rem;
+    background-color: #ffd700;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .new-button:hover {
+    background-color: #ffed4a;
+  }

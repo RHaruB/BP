@@ -1,0 +1,130 @@
+<div class="form-container">
+    <div class="form-header">
+      <h2>{{ isEditing ? 'Editar Cliente' : 'Registrar Cliente' }}</h2>
+    </div>
+  
+    <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()" class="cliente-form">
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input
+          id="nombre"
+          type="text"
+          formControlName="nombre"
+          class="form-input"
+          placeholder="Ingresa el nombre"
+          [class.error]="isFieldInvalid('nombre')"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('nombre')">Nombre es requerido</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="genero">Género</label>
+        <select
+          id="genero"
+          formControlName="genero"
+          class="form-input"
+          [class.error]="isFieldInvalid('genero')"
+        >
+          <option value="" disabled>Seleccionar género</option>
+          <option *ngFor="let option of genderOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+        <div class="error-message" *ngIf="isFieldInvalid('genero')">Género es requerido</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="fechaNacimiento">Fecha de Nacimiento</label>
+        <input
+          id="fechaNacimiento"
+          type="date"
+          formControlName="fechaNacimiento"
+          class="form-input"
+          [class.error]="isFieldInvalid('fechaNacimiento')"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('fechaNacimiento')">
+          Fecha de nacimiento es requerida
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="identificacion">Identificación</label>
+        <input
+          id="identificacion"
+          type="text"
+          formControlName="identificacion"
+          class="form-input"
+          placeholder="Ingresa la identificación"
+          [class.error]="isFieldInvalid('identificacion')"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('identificacion')">
+          Identificación es requerida
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="tipoIdentificacion">Tipo de Identificación</label>
+        <select
+          id="tipoIdentificacion"
+          formControlName="tipoIdentificacion"
+          class="form-input"
+          [class.error]="isFieldInvalid('tipoIdentificacion')"
+        >
+          <option value="" disabled>Seleccionar tipo</option>
+          <option *ngFor="let option of tipoIdentificacionOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+        <div class="error-message" *ngIf="isFieldInvalid('tipoIdentificacion')">
+          Tipo de identificación es requerido
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="direccion">Dirección</label>
+        <input
+          id="direccion"
+          type="text"
+          formControlName="direccion"
+          class="form-input"
+          placeholder="Ingresa la dirección"
+          [class.error]="isFieldInvalid('direccion')"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('direccion')">Dirección es requerida</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input
+          id="telefono"
+          type="tel"
+          formControlName="telefono"
+          class="form-input"
+          placeholder="Ingresa el teléfono"
+          [class.error]="isFieldInvalid('telefono')"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('telefono')">Teléfono es requerido</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="contrasena">Contraseña</label>
+        <input
+          id="contrasena"
+          type="password"
+          formControlName="contrasena"
+          class="form-input"
+          placeholder="Ingresa la contraseña"
+          [class.error]="isFieldInvalid('contrasena')"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('contrasena')">Contraseña es requerida</div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="button" class="cancel-button" (click)="onCancel()">Cancelar</button>
+        <button type="submit" class="new-button" [disabled]="!clienteForm.valid">
+          {{ isEditing ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+  <app-notificacion></app-notificacion>

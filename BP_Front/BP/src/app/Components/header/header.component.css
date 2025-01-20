@@ -1,0 +1,9 @@
+.header {
+    padding: 1rem;
+    background: white;
+    border-bottom: 1px solid #eee;
+  }
+  .logo {
+    font-weight: 500;
+    color: #333;
+  }

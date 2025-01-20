@@ -1,0 +1,74 @@
+<div class="form-container">
+    <div class="form-header">
+      <h2>{{ isEditing ? 'Editar Cuenta' : 'Registrar Cuenta' }}</h2>
+    </div>
+  
+    <form [formGroup]="cuentaForm" (ngSubmit)="onSubmit()" class="cuenta-form">
+      <!-- <div class="form-group">
+        <label for="idCliente">ID Cliente</label>
+        <input
+          id="idCliente"
+          type="number"
+          formControlName="idCliente"
+          class="form-input"
+          placeholder="Ingresa el ID del cliente"
+          [class.error]="isFieldInvalid('idCliente')"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('idCliente')">ID Cliente es requerido</div>
+      </div> -->
+  
+      <div class="form-group">
+        <label for="idCliente">Cliente</label>
+        <select
+          id="idCliente"
+          formControlName="idCliente"
+          class="form-input"
+        >
+          <option value="" disabled>Seleccionar Cliente</option>
+          <option *ngFor="let cliente of clientes" [value]="cliente.idCliente">
+            {{ cliente.nombre }}
+          </option>
+        </select>
+        <div class="error-message" *ngIf="isFieldInvalid('idCliente')">ID Cliente es requerido</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="tipo">Tipo</label>
+        <select
+          id="tipo"
+          formControlName="tipo"
+          class="form-input"
+          [class.error]="isFieldInvalid('tipo')"
+        >
+          <option value="" disabled>Seleccionar tipo</option>
+          <option *ngFor="let option of tipoOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+        <div class="error-message" *ngIf="isFieldInvalid('tipo')">Tipo es requerido</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="saldoInicial">Saldo Inicial</label>
+        <input
+          id="saldoInicial"
+          type="number"
+          formControlName="saldoInicial"
+          class="form-input"
+          placeholder="Ingresa el saldo inicial"
+          [class.error]="isFieldInvalid('saldoInicial')"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('saldoInicial')">
+          Saldo inicial es requerido
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="button" class="cancel-button" (click)="onCancel()">Cancelar</button>
+        <button type="submit" class="new-button" [disabled]="!cuentaForm.valid">
+          {{ isEditing ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+  

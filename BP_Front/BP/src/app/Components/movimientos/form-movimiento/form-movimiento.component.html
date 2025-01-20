@@ -1,0 +1,63 @@
+<div class="form-container">
+    <div class="form-header">
+      <h2>Registrar Movimiento</h2>
+    </div>
+  
+    <form [formGroup]="movimientoForm" (ngSubmit)="onSubmit()" class="cliente-form">
+      <div class="form-group">
+        <label for="idCuenta">Cuenta</label>
+        <select
+          id="idCuenta"
+          formControlName="idCuenta"
+          class="form-input"
+          [class.error]="isFieldInvalid('idCuenta')"
+        >
+          <option value="" disabled>Seleccionar cuenta</option>
+          <option *ngFor="let cuenta of cuentas" [value]="cuenta.idCuenta">
+            {{ cuenta.numeroCuenta }}
+          </option>
+        </select>
+        <div class="error-message" *ngIf="isFieldInvalid('idCuenta')">Cuenta es requerida</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="tipoMovimiento">Tipo de Movimiento</label>
+        <select
+          id="tipoMovimiento"
+          formControlName="tipoMovimiento"
+          class="form-input"
+          [class.error]="isFieldInvalid('tipoMovimiento')"
+        >
+          <option value="" disabled>Seleccionar tipo</option>
+          <option *ngFor="let tipo of tiposMovimiento" [value]="tipo.value">
+            {{ tipo.label }}
+          </option>
+        </select>
+        <div class="error-message" *ngIf="isFieldInvalid('tipoMovimiento')">
+          Tipo de movimiento es requerido
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="valor">Valor</label>
+        <input
+          id="valor"
+          type="number"
+          formControlName="valor"
+          class="form-input"
+          placeholder="Ingresa el valor"
+          [class.error]="isFieldInvalid('valor')"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('valor')">El valor es requerido</div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="button" class="cancel-button" (click)="onCancel()">Cancelar</button>
+        <button type="submit" class="new-button" [disabled]="!movimientoForm.valid">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+  <app-notificacion></app-notificacion>
+  
