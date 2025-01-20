@@ -2,12 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClienteDTO } from '../Interfaces/ClienteDTO';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientesService {
-  private apiUrl = 'https://localhost:44364/api/Clientes';
+   urlBase= environment.urlBase
+        controlador = 'Clientes'
+        private apiUrl = this.urlBase + this.controlador; 
 
   constructor(private http: HttpClient) {}
 

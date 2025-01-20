@@ -2,13 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CuentaDTO } from '../Interfaces/CuentaDTO';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CuentasService {
 
-  private apiUrl = 'https://localhost:44364/api/Cuentas';
+   urlBase= environment.urlBase
+      controlador = 'Cuentas'
+      private apiUrl = this.urlBase + this.controlador; 
 
   constructor(private http: HttpClient) {}
 

@@ -67,7 +67,7 @@ namespace BP_API.Service
                                              IdCuenta = m.IdCuenta,
                                              Fecha = m.Fecha,
                                              TipoMovimiento = m.TipoMovimiento,
-                                            
+
                                              Valor = m.Valor,
                                              Saldo = m.Saldo
                                          }).ToListAsync();
@@ -147,8 +147,11 @@ namespace BP_API.Service
                                     // Llenar la tabla con movimientos
                                     foreach (var movimiento in cuenta.Movimientos)
                                     {
+                                        string fechaString = movimiento.Fecha.HasValue
+                                                     ? movimiento.Fecha.Value.ToString("yyyy-MM-dd")
+                                                      : "Fecha no disponible";
                                         table.Cell().Text(movimiento.IdMovimiento.ToString());
-                                        table.Cell().Text(movimiento.Fecha.ToString("yyyy-MM-dd"));
+                                        table.Cell().Text(fechaString);
                                         table.Cell().Text(movimiento.TipoMovimientoDescripcion);
                                         table.Cell().Text(movimiento.Valor.ToString("C2"));
                                     }

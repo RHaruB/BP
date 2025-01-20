@@ -140,7 +140,7 @@ namespace BP_API.Service
 
             movimiento.TipoMovimiento = request.TipoMovimiento;
             movimiento.Valor = request.Valor;
-            movimiento.Saldo = request.Saldo;
+            movimiento.Saldo = (decimal)request.Saldo;
             movimiento.FechaActualizacion = DateTime.Now;
 
             await _bPContext.SaveChangesAsync();

@@ -1,18 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportesService {
-  private apiUrl = 'https://localhost:44364/api/Reporte'; // Cambia esto por la URL de tu API
+    urlBase= environment.urlBase
+  controlador = 'Reporte/'
+  private apiUrl = this.urlBase + this.controlador; 
 
   constructor(private http: HttpClient) {}
 
-  // Método para obtener el reporte en formato base64
   generarReporteEstadoCuenta(fechaInicio: string, fechaFin: string, clienteId: number): Observable<any> {
-    const url = `${this.apiUrl}`; // Cambia según la ruta de tu controlador
+    const url = `${this.apiUrl}`; 
     const params = {
       fechaInicio,
       fechaFin,

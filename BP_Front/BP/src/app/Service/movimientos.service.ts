@@ -2,12 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MovimientoDTO } from '../Interfaces/MovimientoDTO';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovimientosService {
-  private apiUrl = 'https://localhost:44364/api/Movimientos';
+     urlBase= environment.urlBase
+    controlador = 'Movimientos'
+    private apiUrl = this.urlBase + this.controlador; 
 
   constructor(private http: HttpClient) {}
 
