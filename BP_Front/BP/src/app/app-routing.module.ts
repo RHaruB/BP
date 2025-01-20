@@ -6,7 +6,7 @@ import { FormClienteComponent } from './Components/clientes/form-cliente/form-cl
 import { MovimientosComponent } from './Components/movimientos/movimientos.component';
 import { ReportesComponent } from './Components/reportes/reportes.component';
 import { FormCuentaComponent } from './Components/cuentas/form-cuenta/form-cuenta.component';
-import { FormMovimientoComponent } from './Components/Movimientos/form-movimiento/form-movimiento.component';
+import { FormMovimientoComponent } from './Components/movimientos/form-movimiento/form-movimiento.component';
 
 const routes: Routes = [
   // {
@@ -15,7 +15,7 @@ const routes: Routes = [
   // },
  
   
-  // {path:"**",redirectTo : "clientes", pathMatch: "full"}
+   {path:"",redirectTo : "clientes", pathMatch: "full"},
 
   { path: 'clientes', component: ClientesComponent },
   { path: 'formularioclientes', component: FormClienteComponent },

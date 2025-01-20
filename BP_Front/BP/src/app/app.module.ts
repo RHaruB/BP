@@ -13,7 +13,7 @@ import { MovimientosComponent } from './Components/movimientos/movimientos.compo
 import { ReportesComponent } from './Components/reportes/reportes.component';
 import { FormCuentaComponent } from './Components/cuentas/form-cuenta/form-cuenta.component';
 import { NotificacionComponent } from './Components/General/notificacion/notificacion.component';
-import { FormMovimientoComponent } from './Components/Movimientos/form-movimiento/form-movimiento.component';
+import { FormMovimientoComponent } from './Components/movimientos/form-movimiento/form-movimiento.component';
 
 
 @NgModule({
